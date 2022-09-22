@@ -6,7 +6,7 @@ body {
 
 @font-face {
     font-family: "PGothic";
-    src: url("./style/pgothic.ttf");
+    src: url("pgothic.ttf");
 }
 
 p {
