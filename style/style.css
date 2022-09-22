@@ -7,6 +7,7 @@ body {
 @font-face {
     font-family: "Saitamaar";
     src: url("Saitamaar.woff2");
+    font-display: swap;
 }
 
 p {
