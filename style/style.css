@@ -2,6 +2,7 @@
 body {
     background: black;
     margin: 8px;
+    line-height: 20px;
 }
 
 @font-face {
@@ -20,5 +21,4 @@ p {
 #art {
     font-family: "PGothic";
     font-size: 12pt;
-    line-height: 20px;
 }
