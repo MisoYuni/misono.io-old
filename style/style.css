@@ -1,0 +1,22 @@
+body {
+    background: black;
+    margin: 8px;
+}
+
+@font-face {
+    font-family: "PGothic";
+    src: url("pgothic.ttf");
+}
+
+p {
+    font-family: monospace;
+    font-size: 14px;
+    color: white;
+    white-space: pre;
+    margin: 0;
+}
+
+#art {
+    font-family: "PGothic";
+    font-size: 18px;
+}
