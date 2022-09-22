@@ -2,12 +2,11 @@
 body {
     background: black;
     margin: 8px;
-    line-height: 20px;
 }
 
 @font-face {
-    font-family: "PGothic";
-    src: url("pgothic.ttf");
+    font-family: "Saitamaar";
+    src: url("Saitamaar.woff2");
 }
 
 p {
@@ -19,6 +18,8 @@ p {
 }
 
 #art {
-    font-family: "PGothic";
-    font-size: 12pt;
+    font-family: "Saitamaar";
+    white-space: pre;
+    font-size: 16px;
+    line-height: 18px;
 }
