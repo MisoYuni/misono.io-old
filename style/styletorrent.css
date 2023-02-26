@@ -1,0 +1,26 @@
+@charset "utf-8";
+body {
+    background: black;
+    margin: 8px;
+}
+
+@font-face {
+    font-family: "Saitamaar";
+    src: url("Saitamaar.woff2");
+    font-display: swap;
+}
+
+p {
+    font-family: monospace;
+    font-size: 14px;
+    color: white;
+    white-space: pre;
+    margin: 0;
+}
+
+#art {
+    font-family: "Saitamaar";
+    white-space: pre;
+    font-size: 16px;
+    line-height: 18px;
+}
