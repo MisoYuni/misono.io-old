@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Made by Ryan Kim -->
+        <meta charset="UTF-8">
+        <title>LMC Simulator</title>
+        <link rel="stylesheet" href="./style/style.css">
+        <script src="https://kit.fontawesome.com/7e08efe7ac.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://unpkg.com/keyboard-css@1.2.4/dist/css/main.min.css" />
+    </head>
+    <body>
+        <!-- Script -->
+        <script src="./script.js"></script>
+
+        <!-- Actual UI -->
+        <h1>Little Man Computer Simulator - for A-Level Computing Students</h1>
+        <div id="editorWrapper">
+            <div id="editor">
+                <textarea id="code" rows="25" cols="20" wrap="off"></textarea>
+            </div>
+            <select id="examples">
+                <option value="1">Adding two values</option>
+                <option value="2">Subtracting two values</option>
+                <option value="3">Total inputs counter</option>
+                <option value="4">Maximum of two inputs</option>
+                <option value="5">Triangular number finder</option>
+            </select>
+            <button class="kbc-button kbc-button-primary" id="load_example" onclick="selectExample();">Load Example</button>
+        </div>
+        <div id="interactionWrapper">
+            <div id="registers">
+                PC&nbsp;
+                <input type="text" id="pc" value="00">
+                CIR 
+                <input type="text" id="cir" value="00">
+                <br>
+                MAR 
+                <input type="text" id="mar" value="00">
+                MDR 
+                <input type="text" id="mdr" value="00">
+                <br>
+                &nbsp;Accumulator 
+                <input type="text" id="acc" value="00">
+            </div>
+            <div id="io">
+                <br>
+                <div id="inputWrapper">
+                    Input
+                    <br>
+                    <textarea type="text" id="input" cols="5" rows="10"></textarea>
+                </div>
+                <div id="outputWrapper">
+                    Output
+                    <br>
+                    <textarea type="text" id="output" cols="5" rows="10"></textarea>
+                </div>
+            </div>
+        </div>
+        <div id="controllerWrapper">
+            <div id="control">
+                <button class="kbc-button focus" id="run" onclick="run();" title="Run Program">
+                    Run
+                    <i class="fa-solid fa-play"></i>
+                </button>
+                <button class="kbc-button focus" id="step" onclick="step();" title="Step next FDE cycle">
+                    Step
+                    <i class="fa-solid fa-forward-step"></i>
+                </button>
+                <button class="kbc-button focus" id="pause" onclick="pause();" title="Pause Program">
+                    Pause
+                    <i class="fa-solid fa-pause"></i>
+                </button>
+                <br>
+                <button class="kbc-button kbc-button-success" id="load" onclick="load();">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load
+                </button>
+                <button class="kbc-button kbc-button-danger" id="reset" onclick="reset(true);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reset
+                </button>
+                <br>
+                Clock Speed
+                <br>
+                <input type="range" id="clockrange" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
+                <input type="text" id="clock" value="50" oninput="this.previousElementSibling.value = this.value">
+                Hz
+            </div>
+            <div id="help">
+                <br>
+                <table class="alternateTable">
+                    <tbody>
+                        <tr>
+                            <td>Opcode</td>
+                            <td>Mnemonics</td>
+                            <td>Instruction</td>
+                        </tr>
+                        <tr>
+                            <td>1xx</td>
+                            <td>ADD</td>
+                            <td>Add</td>
+                        </tr>
+                        <tr>
+                            <td>2xx</td>
+                            <td>SUB</td>
+                            <td>Subtraction</td>
+                        </tr>
+                        <tr>
+                            <td>3xx</td>
+                            <td>STA</td>
+                            <td>Store</td>
+                        </tr>
+                        <tr>
+                            <td>5xx</td>
+                            <td>LDA</td>
+                            <td>Load</td>
+                        </tr>
+                        <tr>
+                            <td>6xx</td>
+                            <td>BRA</td>
+                            <td>Branch</td>
+                        </tr>
+                        <tr>
+                            <td>7xx</td>
+                            <td>BRZ</td>
+                            <td>Branch if zero</td>
+                        </tr>
+                        <tr>
+                            <td>8xx</td>
+                            <td>BRP</td>
+                            <td>Branch if possible</td>
+                        </tr>
+                        <tr>
+                            <td>901</td>
+                            <td>INP</td>
+                            <td>Input</td>
+                        </tr>
+                        <tr>
+                            <td>902</td>
+                            <td>OUT</td>
+                            <td>Output</td>
+                        </tr>
+                        <tr>
+                            <td>000</td>
+                            <td>HLT</td>
+                            <td>Halt</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>DAT</td>
+                            <td>Data</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <center>
+                    <button class="kbc-button kbc-button-secondary" onclick="document.getElementById('detail').style.display = 'block';">
+                        Instructions
+                    </button>
+                    <button class="kbc-button kbc-button-secondary" onclick="document.getElementById('about').style.display = 'block';">
+                        &nbsp;&nbsp;&nbsp;&nbsp;About
+                    </button>
+                </center>
+            </div>
+        </div>
+        <div id="memoryWrapper">
+            <table id="memory">
+                <tbody>
+                    <tr>
+                        <td>
+                            00
+                            <input id="cell_00" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            01
+                            <input id="cell_01" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            02
+                            <input id="cell_02" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            03
+                            <input id="cell_03" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            04
+                            <input id="cell_04" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            05
+                            <input id="cell_05" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            06
+                            <input id="cell_06" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            07
+                            <input id="cell_07" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            08
+                            <input id="cell_08" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            09
+                            <input id="cell_09" class="memoryCell" value="000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            10
+                            <input id="cell_10" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            11
+                            <input id="cell_11" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            12
+                            <input id="cell_12" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            13
+                            <input id="cell_13" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            14
+                            <input id="cell_14" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            15
+                            <input id="cell_15" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            16
+                            <input id="cell_16" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            17
+                            <input id="cell_17" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            18
+                            <input id="cell_18" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            19
+                            <input id="cell_19" class="memoryCell" value="000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            20
+                            <input id="cell_20" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            21
+                            <input id="cell_21" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            22
+                            <input id="cell_22" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            23
+                            <input id="cell_23" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            24
+                            <input id="cell_24" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            25
+                            <input id="cell_25" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            26
+                            <input id="cell_26" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            27
+                            <input id="cell_27" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            28
+                            <input id="cell_28" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            29
+                            <input id="cell_29" class="memoryCell" value="000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            30
+                            <input id="cell_30" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            31
+                            <input id="cell_31" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            32
+                            <input id="cell_32" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            33
+                            <input id="cell_33" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            34
+                            <input id="cell_34" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            35
+                            <input id="cell_35" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            36
+                            <input id="cell_36" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            37
+                            <input id="cell_37" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            38
+                            <input id="cell_38" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            39
+                            <input id="cell_39" class="memoryCell" value="000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            40
+                            <input id="cell_40" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            41
+                            <input id="cell_41" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            42
+                            <input id="cell_42" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            43
+                            <input id="cell_43" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            44
+                            <input id="cell_44" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            45
+                            <input id="cell_45" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            46
+                            <input id="cell_46" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            47
+                            <input id="cell_47" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            48
+                            <input id="cell_48" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            49
+                            <input id="cell_49" class="memoryCell" value="000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            50
+                            <input id="cell_50" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            51
+                            <input id="cell_51" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            52
+                            <input id="cell_52" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            53
+                            <input id="cell_53" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            54
+                            <input id="cell_54" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            55
+                            <input id="cell_55" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            56
+                            <input id="cell_56" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            57
+                            <input id="cell_57" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            58
+                            <input id="cell_58" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            59
+                            <input id="cell_59" class="memoryCell" value="000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            60
+                            <input id="cell_60" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            61
+                            <input id="cell_61" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            62
+                            <input id="cell_62" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            63
+                            <input id="cell_63" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            64
+                            <input id="cell_64" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            65
+                            <input id="cell_65" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            66
+                            <input id="cell_66" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            67
+                            <input id="cell_67" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            68
+                            <input id="cell_68" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            69
+                            <input id="cell_69" class="memoryCell" value="000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            70
+                            <input id="cell_70" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            71
+                            <input id="cell_71" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            72
+                            <input id="cell_72" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            73
+                            <input id="cell_73" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            74
+                            <input id="cell_74" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            75
+                            <input id="cell_75" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            76
+                            <input id="cell_76" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            77
+                            <input id="cell_77" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            78
+                            <input id="cell_78" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            79
+                            <input id="cell_79" class="memoryCell" value="000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            80
+                            <input id="cell_80" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            81
+                            <input id="cell_81" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            82
+                            <input id="cell_82" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            83
+                            <input id="cell_83" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            84
+                            <input id="cell_84" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            85
+                            <input id="cell_85" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            86
+                            <input id="cell_86" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            87
+                            <input id="cell_87" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            88
+                            <input id="cell_88" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            89
+                            <input id="cell_89" class="memoryCell" value="000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            90
+                            <input id="cell_90" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            91
+                            <input id="cell_91" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            92
+                            <input id="cell_92" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            93
+                            <input id="cell_93" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            94
+                            <input id="cell_94" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            95
+                            <input id="cell_95" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            96
+                            <input id="cell_96" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            97
+                            <input id="cell_97" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            98
+                            <input id="cell_98" class="memoryCell" value="000">
+                        </td>
+                        <td>
+                            99
+                            <input id="cell_99" class="memoryCell" value="000">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="logWrapper">
+            <div id="screenW">
+                Current FDE cycle
+                <div id="screen"> </div>
+            </div>
+            <div id="logW">
+                Detailed Log
+                <div id="log"> </div>
+            </div>
+        </div>
+
+        <!-- Pop-ups -->
+        <div id="detail" style="display: none;">
+            <span class = "sayonara">
+                <a href="#" onclick="JavaScript: document.getElementById('detail').style.display = 'none'; return False;">
+                    [X] Close
+                </a>
+            </span>
+            <h3>LMC Instruction Set</h3>
+            <table class="alternateTable">
+                <tbody>
+                    <tr>
+                        <td>Opcode</td>
+                        <td>Mnemonics</td>
+                        <td>Name</td>
+                        <td>Description</td>
+                    </tr>
+                    <tr>
+                        <td>1xx</td>
+                        <td>ADD</td>
+                        <td>Add</td>
+                        <td>Add the value stored in memory 'xx' to the value on the accumulator.</td>
+                    </tr>
+                    <tr>
+                        <td>2xx</td>
+                        <td>SUB</td>
+                        <td>Subtract</td>
+                        <td>Subtract the value stored in memory 'xx' from the value on the accumulator. </td>
+                    </tr>
+                    <tr>
+                        <td>3xx</td>
+                        <td>STA</td>
+                        <td>Store</td>
+                        <td>Store the value on the accumulator in memory 'xx'.</td>
+                    </tr>
+                    <tr>
+                        <td>5xx</td>
+                        <td>LDA</td>
+                        <td>Load</td>
+                        <td>Load the value from memory 'xx' to the accumulator.</td>
+                    </tr>
+                    <tr>
+                        <td>6xx</td>
+                        <td>BRA</td>
+                        <td>Branch</td>
+                        <td>Set the program counter to the address 'xx'.</td>
+                    </tr>
+                    <tr>
+                        <td>7xx</td>
+                        <td>BRZ</td>
+                        <td>Branch if zero</td>
+                        <td>Set the program counter to the value 'xx' only if the current value of the accumulator is 0. Otherwise, do nothing.</td>
+                    </tr>
+                    <tr>
+                        <td>8xx</td>
+                        <td>BRP</td>
+                        <td>Branch if positive</td>
+                        <td>Set the program counter to the value 'xx' only if the current value of the accumulator is greater than 0. Otherwise, do nothing.</td>
+                    </tr>
+                    <tr>
+                        <td>901</td>
+                        <td>INP</td>
+                        <td>Input</td>
+                        <td>Fetch the value from the user, and stores in the accumulator.</td>
+                    </tr>
+                    <tr>
+                        <td>902</td>
+                        <td>OUT</td>
+                        <td>Output</td>
+                        <td>Copy the value from the accumulator to the I/O screen.</td>
+                    </tr>
+                    <tr>
+                        <td>000</td>
+                        <td>HLT</td>
+                        <td>Halt</td>
+                        <td>Stops the program.</td>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>DAT</td>
+                        <td>Data</td>
+                        <td>An assembler instruction used to load the value into the next available memory.</td>
+                    </tr>
+                </tbody>
+            </table>
+            Source: https://en.wikipedia.org/wiki/Little_man_computer#Instructions
+        </div>
+        <br>
+        <div id="about" style="display: none;">
+            <span class = "sayonara">
+                <a href="#" onclick="JavaScript: document.getElementById('about').style.display = 'none'; return False;">
+                    [X] Close
+                </a>
+            </span>
+            <h3>About LMC and this simulator</h3>
+            <p>The Little Man Computer (LMC) is an instructional model of a computer, created by Dr. Stuart Madnick in 1965. You can find more about it on
+            <a href="https://en.wikipedia.org/wiki/Little_man_computer" target="_blank">this wikipedia page</a></p>
+            <p>This LMC simulator has been developed by Ryan Kim in Hampstead School, as an A-Level Computer Science Non-exam Assessment project.</p>
+            <center>Site and design © 2023 Ryan Kim</center>
+        </div>
+
+        <!-- Example programs -->
+        <div style="display: none;"></div>
+    </body>
+</html>

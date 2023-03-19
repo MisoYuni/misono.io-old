@@ -1,0 +1,266 @@
+@font-face {
+    font-family: 'Railway';
+    src: url('./Raleway-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SourceCodePro';
+    src: url('./SourceCodePro-Regular.ttf') format('truetype');
+}
+
+body {
+    font-family: Railway;
+    font-size: 16px;
+    background-image: linear-gradient(-20deg, #ddd6f3 0%, #faaca8 100%, #faaca8 100%);
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 20pt;
+    border-bottom: 2px solid black;
+}
+
+#interactionWrapper, #controllerWrapper, #memoryWrapper {
+    /* background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%); */
+    /* background: linear-gradient(60deg, #29323c 0%, #485563 100%); */
+    background-image: linear-gradient(135deg, #f794a4 0%, #fdd6bd 100%);
+    border: white;
+}
+
+/* editorWrapper design */
+
+#editorWrapper {
+    float: left;
+    margin: 10px;
+}
+
+#code {
+    height: 490px;
+    border-radius: 25px;
+    font-size: 16pt;
+}
+
+select {
+    border-radius: 25px;
+    padding: 12px;
+}
+
+/* interactionWrapper design */
+
+#interactionWrapper {
+    border-radius: 25px;
+    float: left;
+    margin: 10px;
+    box-sizing: border-box;
+    border: 1px solid #665566;
+    padding: 20px;
+}
+
+#registers {
+    font-family: 'SourceCodePro', monospace;
+    text-align: center;
+    font-size: 12pt;
+}
+
+#interactionWrapper input, #clock {
+    font-family:'SourceCodePro', monospace;
+    text-align: center;
+    width: 30px;
+    font-size: 12pt;
+    margin: 3px auto;
+}
+
+#inputWrapper {
+    float: left;
+    margin-right: 20px;
+}
+
+#outputWrapper {
+    float: left;
+}
+
+#input, #output {
+    border-radius: 10px;
+    /* height: 371px; */
+    background-image: linear-gradient(to left, #434343 0%, black 100%);
+    color: white;
+    font-family:'SourceCodePro', monospace;
+    font-size: 12pt;
+}
+
+/* controllerWrapper design */
+
+#controllerWrapper {
+    border-radius: 25px;
+    width: 300px;
+    float: left;
+    border: 1px solid #665566;
+    padding-top: 22px;
+    margin-top: 10px;
+}
+
+#control {
+    box-sizing: border-box;
+    text-align: center;
+    font-family: Railway;
+}
+
+#clock {
+    width: 40px;
+}
+
+#clockrange {
+    width: 60%;
+}
+
+#help {
+    font-size: 11pt;
+    margin: 18px;
+}
+
+/* memoryWrapper */
+
+#memoryWrapper {
+    float: left;
+    margin: 10px;
+    width: 450px;
+    border-collapse: collapse;
+}
+
+#memory {
+    border-collapse: collapse;
+    margin: 0;
+}
+
+#memory td {
+    border: 1px black solid;
+    text-align: center;
+    font-family:'SourceCodePro', monospace;
+    padding: 3px;
+    color: black;
+  }
+
+#memory input {
+    font-family:'SourceCodePro', monospace;
+    color: black;
+    text-align: center;
+    width: 30px;
+    display: block;
+    margin: 1px auto;
+    font-size: 12pt;
+}
+
+/* logWrapper */
+
+#logWrapper {
+    width: 100%;
+    clear: both;
+}
+
+#screenW, #logW {
+    float: left;
+    width: 675px;
+    height: 300px;
+    margin: 5px;
+    padding: 5px;
+}
+
+#screen, #log {
+    border-radius: 25px;
+    background-image: linear-gradient(to left, #434343 0%, black 100%);
+    color: white;
+    font-family:'SourceCodePro', monospace;
+    font-size: 12pt;
+    width: 98%;
+    height: 80%;
+    border: 1px solid #000000;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+/* Buttons */
+
+button {
+    text-align: center;
+    font-family: Railway;
+    margin: 0 auto;
+}
+
+.kbc-button-success, .kbc-button-danger, .kbc-button-secondary {
+    width: 40%;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+/* Form design */
+
+.sayonara {
+    float: right;
+}
+
+.sayonara a {
+    text-decoration: none;
+    color: black;
+    font-size: 16pt;
+}
+
+#detail, #about {
+    border-radius: 25px;
+    display: none;
+    position: absolute;
+    background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
+    border: 1px solid #000000;
+    top: 200px;
+    width: 1000px;
+    height: 500px;
+    left: 50%;
+    margin-left:-500px;
+    padding: 0px;
+    background-color: #FFFFFF;
+    padding:10px 30px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+#about {
+    height: 300px;
+}
+
+
+/* Table design */
+.alternateTable {
+    border-collapse: collapse
+}
+
+.alternateTable td {
+    border: 1px solid #665566;
+}
+
+.alternateTable tr:nth-child(1) {
+    background-color: #b04646;
+    color: white;
+    text-align: center;
+}
+
+.alternateTable tr:nth-of-type(2n+3) {
+	background-color: #fafafa;
+}
+
+.alternateTable tr:nth-of-type(2n+2) {
+	background-color: #f0f0f0;
+}
