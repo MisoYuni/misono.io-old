@@ -27,13 +27,11 @@ body {
 /* <div>, <p> */
 
 div, p {
-    font-size: 14px;
     color: white;
     white-space: pre;
     margin: 0;
     font-size: 16px;
     line-height: 18px;
-    padding: 1px;
 }
 
 .tag {
@@ -46,10 +44,14 @@ div, p {
     white-space: pre;
     float: left;
     font-weight: bold;
+    width: min-content;
+    height: min-content;
 }
 
 #info {
     float: left;
+    width: min-content;
+    height: min-content;
 }
 
 /* <a> tag */
