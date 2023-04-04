@@ -1,33 +1,64 @@
 <!DOCTYPE html>
+<!-- © 2023 Misono Network -->
 <html>
   <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style/style.css">
     <title>Misono Network</title>
   </head>
-  <body>
-    <p id="art">
-　　　　/ .::.::.::.::.:;/ .::.:〃､::.::.::/{:::ｉ::.:/.::.::.::.',::.::.::.::.::.:';:ヽ
-.　　　/ .:/.::.:;.::.:″.::〃＼＼/　V|::.'::.::.::.::.:il:.::.::.::.::.:.:ｉ:.:i
-　　　' .:/.: :/. ::ｉ::.::.::{{:､:: ::`/ ＿｀|::i::.::.::.::.::il:.::.::.::.:il:.:l:.ｌ|
-　　 {／.::.:/.::.::l|::.::.::iﾄ､＼/´￣｀｜l、::.::.::.ハ::.} ::.:il:.:l:.ｌ|
-.　／ :/.::/./ .::l|::.::.::i|::.::>′　　　|::|ﾊ ::.::/-､V .::.:il:.:l:.ｌ|
-　７ :/ .::.::.{.::./l|::.::.::il／ ＿　　　 V　}.::/　　 |::.::.:ﾘ ;'.:ｌ|
-　{ ::′.::.:.::Ⅵ:::l::.::.::;ﾊ xｬ≠ミ、　 　 ﾚ′´　 l::.::/:/.:.:ｌ|
-　∨ .::.::.::.::{ |l::. ::.::'::.ｉ|　､､ ､､　 　 　 ,ｬ=ﾐｘ 人/:/ .::.:ｌ|
-　.′.::.::.::.::.｀|l::.::.::.::.::ｌl　 　 　 　 　 ,　､､､ Ｙ}ノ}/! .: .::ﾘ
-. {::.::.;、::.::.:ヽ|l::.::ｉ::. ::.ｌ|　　　,r=　､　　　　,.':!:::::':::l.::.:_/＿__
-　ヽ::{ ＼::. :.}ヽ::.l::.::.::ｌl　 　 {　　 ｿ　　　人:ｌ::::::::ﾉ://￣￣ 〉
-,　´￣￣＼ﾉ⌒';l::.::.::ｌト　　　￣　　　イ:::::::ｌ::::::::://　　　 /
-　　　　　　 ＼　il:.: ::.ｌ| 　 ＞.-、＜::}::ﾊ:::::::l:::::::// /¨７ /
-　　　　　　　　ヽ';:.:i.::ﾘ　　 /｀ヽヽ:::ﾘ￣ ヽﾘ.:: // /__/ /
-　　　 　 　 　 ヽ ∨:/＼　　 　 } }ノ　 　 厶イ/ oｏo /
-　.　　　　 　 　 i　∨　　＼＿ノ,ﾉ i　　　　{　}′　　/
-　｀ ー-　 　 　 l 　 ＼ 　 　 ,／　 ｌ　　　　}〃￣￣〉
-    </p>
-    <p>
-      Ryan Kim
-      contact ~ yuni(@)misono.io
-    </p>
+  <body onload="typeWriter();">
+    <!-- Script -->
+    <script src="./script.js"></script>
+    <!-- Contents -->
+    <div id="content">
+      <p id="demo"><span style="color: #aad7ea;">alice@misono</span>:<span style="color: #688894;">~</span>$ <span id="cursor">█</span></p>
+      <div id="art"></div>
+      <div id="info"></div>
+    </div>
+
+    <!-- Storage divs -->
+    <div id="storage1" style="display: none;">
+      　　　　　　　　　　　　_,,.､ ..,,_
+      　　　　 　　　_､+''",,..　-´" ''.,ヘ､"'＜
+      　　　　　　／,+'",:i:i:i:i:i:i:i:i:i:i:i:i:i"''*､'*､ヽ､
+           　 　 /:i/:i:i/:i:i:｀`````｀:i:i:i:i:i:i:i:i:ﾍヽ:i:ヽ
+      　　　　 /:i/:i:i/:i:i:i:i:i:i:i:i:i:ﾄ:i:i:i:i:i:ヽ:i:i:i:i:ﾍ:l:i:i-､_,,.._､
+      　　　 V:i/:i:i/:i:i:λ:i:i:i:i:i:i| ＼:i:i:i:i:}:i:i:i:i:ﾍ|/;/_ゞ､ l:|
+        　 　 |:i|:i:i:|..。｡ *''ﾟ:i:i:i:´"''‐- .,,_l:i:i:ih:i/;;Λ:i:ヽ:i<､
+           　 |:i|:i:i:|:i:i/　廴:i:i:i:i:i|_,,...　　ヽ:i:i|-ﾍ;;l:i:i:i:i:i:i:i|_)V
+        　 　 l:i|:i:i:|ノ　　 ヽ:ﾍ:i:i:i|　　 　 |:i:i|ヽl:ﾍ;V:i:i:i:i:i|／
+      　　　　|:i:i:i:ﾄf'劣气 ヽﾍ:i:i竿竿羔:i:γヽ:i:L|:i:i:i:i:i|
+      　　　　|:i|:i:|.| u　　 　　ゞ:i:i',　　 .|:i:i|う /:i:il|:i:i:i:i:i|
+      　　　　|:i|:i|弋u　　, ～～､:i:V　 .|:i:|-|:i:i:i:i:||:i:i:i:i:i|
+         　 　|:i:|:i|:i:|ヽ､　 ー-､ /ヽヽ＜|:i|:i:|:i:i:i:i:i||:i:i:i:i:i|
+              |:i:i|:|:i:|:i:i:i/＞ ー '' ".ﾍヽ､|:i|:i:i:V:i:i:i:||:i:i:i:i|:|
+      　　　 |:i:i:|:|､+'／;;;/ Λ_+''"　Λ.|:i|､ﾆ>､:i:i:||:i:i:i:i|:|
+      　　　|,<ﾆ||／;;;;;;;/.Yヽ_./ヽ_/　ﾍ|:i|;;;;＼ﾆﾆ>:i:i:i:|:i|
+      　　　ﾄニ.||;;;;;;;;;;∥　.∥|　　 　.ﾊ|:i|;;;;;;/ﾆ／:i:i:i:i:|:i|
+      　　　|/ゞ.|ﾄ;;;;;;;∥　.∥ | 　＿＿ |:|;;;/ﾆ<ニﾊ:i:i:i:|:i|
+      　　_/ﾆニ||=;;;;∥　.∥l7　 ー--..|:|/／ﾆﾆﾆﾊ:i:i:i:リ
+      . 　ハﾆニﾘ=l;;∥　.∥ １　　　 　ﾘ<ﾆﾆﾆﾆﾆﾆヽ:i:i:|
+      
+    </div>
+    <div id="storage2" style="display: none;">
+      <span class="tag">yuni</span>@<span class="tag">misono</span>
+      -----------
+      <span class="tag">Name</span>: Ryan Kim
+      <span class="tag">Position</span>: Student
+      <span class="tag">Location</span>: London, United Kingdom
+      <span class="tag">Skills</span>: Statistical Analysis | Programming
+      <span class="tag">Languages</span>: English (IELTS 6.5) | Korean (Native) | Japanese (JLPT N2)
+
+      <span class="tag">Education</span>: MMath Mathematics ~ University of Warwick (2023?)
+                 -------------------------------------------------
+                 GCE Advanced Level ~ Hampstead School (2018-2023)
+                 Mathematics A* | Further Mathematics A* | Computer Science A* (Predicted)
+
+      <span class="tag">Contact</span>: <a href="mailto:yuni@misono.io">yuni(at)misono.io</a>
+      <span class="tag">Linkedin</span>: <a href="https://www.linkedin.com/in/corps-sans-organes/">Ryan Kim</a>
+      <span class="tag">Github</span>: <a href="https://github.com/MisonoYuni">MisonoYuni</a>
+
+      <span style="color: #251621">███</span><span style="color: #688894">███</span><span style="color: #aad7ea">███</span><span style="color: #ce9178">███</span><span style="color: #d6b9a8">███</span>
+    </div>
   </body>
 </html>

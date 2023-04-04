@@ -1,8 +1,8 @@
+/* © 2023 Misono Network */
+
 @charset "utf-8";
-body {
-    background: black;
-    margin: 8px;
-}
+
+/* Fonts */
 
 @font-face {
     font-family: "Saitamaar";
@@ -10,17 +10,64 @@ body {
     font-display: swap;
 }
 
-p {
-    font-family: monospace;
+@font-face {
+    font-family: "Roboto Mono";
+    src: url("RobotoMono-Regular.ttf");
+    font-display: swap;
+}
+
+/* <body> */
+
+body {
+    font-family: "Roboto Mono";
+    background: #251621;
+    margin: 8px;
+}
+
+/* <div>, <p> */
+
+div, p {
     font-size: 14px;
     color: white;
     white-space: pre;
     margin: 0;
+    font-size: 16px;
+    line-height: 18px;
+    padding: 1px;
+}
+
+.tag {
+    color: #d6b9a8;
 }
 
 #art {
     font-family: "Saitamaar";
+    color: #aad7ea;
     white-space: pre;
-    font-size: 16px;
-    line-height: 18px;
+    float: left;
+    font-weight: bold;
+}
+
+#info {
+    float: left;
+}
+
+/* <a> tag */
+
+a:link {
+    color: #ce9178;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #ce9178;
+    background-color: transparent;
+    text-decoration: none;
+}
+  
+a:hover {
+    color: #aad7ea;
+    background-color: transparent;
+    text-decoration: underline;
 }
