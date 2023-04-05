@@ -28,7 +28,6 @@ body {
 
 div, p {
     color: white;
-    white-space: pre;
     margin: 0;
     font-size: 16px;
     line-height: 18px;
@@ -52,6 +51,7 @@ div, p {
     float: left;
     width: min-content;
     height: min-content;
+    white-space: pre;
 }
 
 /* <a> tag */
