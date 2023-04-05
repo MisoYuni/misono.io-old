@@ -29,8 +29,16 @@ body {
 div, p {
     color: white;
     margin: 0;
-    font-size: 16px;
-    line-height: 18px;
+    font-size: 1.1vmax;
+    line-height: 1.21vmax;
+    @media (orientation: portrait) {
+        font-size: 1.6vmin;
+        line-height: 1.76vmin;
+    }
+    /*
+    font-size: calc(30px - 1.2vw);
+    line-height: calc(1.1 * (30px - 1.2vw));
+    */
 }
 
 .tag {
