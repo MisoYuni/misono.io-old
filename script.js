@@ -1,6 +1,6 @@
 // © 2023 Misono Network 
 
-var txt = 'neo-fetch';
+var txt = 'neofetch';
 var speed = 80;
 
 var ctxt = '<span id=\"cursor\">█</span>';

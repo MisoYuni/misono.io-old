@@ -28,6 +28,7 @@ body {
 
 div, p {
     color: white;
+    background: #251621;
     margin: 0;
     font-size: 1.1vmax;
     line-height: 1.21vmax;
